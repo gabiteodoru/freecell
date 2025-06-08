@@ -940,35 +940,50 @@ class FreeCellGame {
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTap;
             
-            // Single tap for quick auto-move on mobile (tap and hold for regular move)
-            if (tapLength < 500 && tapLength > 0 && e.target.classList.contains('card')) {
-                e.preventDefault();
-                
-                // Check if this is a card that can auto-move
-                let cardElement = e.target;
-                if (!cardElement.classList.contains('card')) {
-                    cardElement = e.target.closest('.card');
-                }
-                
-                if (cardElement) {
-                    this.logEvent(`MOBILE: Single tap auto-move attempt`);
+            // Check if this was a tap (not a drag)
+            let cardElement = e.target;
+            if (!cardElement.classList.contains('card')) {
+                cardElement = e.target.closest('.card');
+            }
+            
+            if (cardElement && !isDragging) {
+                // Quick double tap for auto-move
+                if (tapLength < 400 && tapLength > 0) {
+                    e.preventDefault();
+                    this.logEvent(`MOBILE: Double tap auto-move attempt`);
                     this.handleCardDoubleClick(cardElement);
+                } else {
+                    // Single tap for regular selection
+                    this.logEvent(`MOBILE: Single tap selection`);
+                    this.handleCardClick(cardElement);
                 }
             }
             
             lastTap = currentTime;
+            isDragging = false; // Reset drag state
         });
         
-        // Prevent page scrolling when touching game elements
+        // Prevent page scrolling only during drag operations, not taps
+        let isDragging = false;
+        let startY = 0;
+        
         document.addEventListener('touchstart', (e) => {
             if (this.isGameElement(e.target)) {
-                e.preventDefault();
+                startY = e.touches[0].clientY;
+                isDragging = false;
             }
-        }, { passive: false });
+        }, { passive: true });
         
         document.addEventListener('touchmove', (e) => {
             if (this.isGameElement(e.target)) {
-                e.preventDefault();
+                const currentY = e.touches[0].clientY;
+                const deltaY = Math.abs(currentY - startY);
+                
+                // Only prevent scrolling if user is actually dragging (moved more than 10px)
+                if (deltaY > 10) {
+                    isDragging = true;
+                    e.preventDefault();
+                }
             }
         }, { passive: false });
         

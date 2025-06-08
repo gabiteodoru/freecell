@@ -98,8 +98,8 @@ button:disabled:hover {
     grid-template-rows: auto 1fr;
     gap: 20px;
     min-height: 600px;
-    /* Prevent scrolling within game board */
-    touch-action: none;
+    /* Allow touch but prevent scrolling */
+    touch-action: pan-y;
     overscroll-behavior: none;
 }
 
