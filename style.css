@@ -250,6 +250,17 @@ button:disabled:hover {
     margin-bottom: 10px;
 }
 
+.debug-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.debug-buttons button {
+    padding: 4px 8px;
+    font-size: 10px;
+    min-width: 40px;
+}
+
 .debug-header h3 {
     margin: 0;
     color: #FFD700;

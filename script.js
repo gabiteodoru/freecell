@@ -72,6 +72,45 @@ class FreeCellGame {
         this.logEvent('=== Log cleared ===');
     }
     
+    async copyLogToClipboard() {
+        const logContent = this.debugLog.join('\n');
+        
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                // Modern clipboard API
+                await navigator.clipboard.writeText(logContent);
+                this.showCopyFeedback('Copied to clipboard!');
+            } else {
+                // Fallback for older browsers or non-HTTPS
+                const textArea = document.createElement('textarea');
+                textArea.value = logContent;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                this.showCopyFeedback('Copied to clipboard!');
+            }
+        } catch (err) {
+            this.showCopyFeedback('Copy failed - try selecting text manually');
+        }
+    }
+    
+    showCopyFeedback(message) {
+        const button = document.getElementById('copy-log');
+        const originalText = button.textContent;
+        button.textContent = '✓';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = '';
+        }, 1000);
+        
+        this.logEvent(message);
+    }
+    
     saveGameState() {
         const state = {
             columns: this.columns.map(col => [...col]), // Deep copy
@@ -220,6 +259,10 @@ class FreeCellGame {
         
         document.getElementById('clear-log').addEventListener('click', () => {
             this.clearLog();
+        });
+        
+        document.getElementById('copy-log').addEventListener('click', () => {
+            this.copyLogToClipboard();
         });
         
         document.getElementById('undo').addEventListener('click', () => {
