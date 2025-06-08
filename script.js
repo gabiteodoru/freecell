@@ -965,7 +965,12 @@ class FreeCellGame {
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTap;
             
+            this.logEvent(`TOUCH END: isDragging=${isDragging}, target=${e.target.tagName}.${e.target.className}`);
+            
             if (!isDragging) {
+                // Prevent the click event from also firing
+                e.preventDefault();
+                
                 // Check what was tapped
                 let cardElement = e.target;
                 if (!cardElement.classList.contains('card')) {
@@ -975,7 +980,6 @@ class FreeCellGame {
                 if (cardElement) {
                     // Quick double tap for auto-move
                     if (tapLength < 400 && tapLength > 0) {
-                        e.preventDefault();
                         this.logEvent(`MOBILE: Double tap auto-move`);
                         this.handleCardDoubleClick(cardElement);
                     } else {
@@ -994,6 +998,7 @@ class FreeCellGame {
                     this.handleColumnClick(e.target);
                 } else {
                     // Tap elsewhere - clear selection
+                    this.logEvent(`MOBILE: Clearing selection`);
                     this.clearSelection();
                 }
             }
