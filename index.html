@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FreeCell Solitaire</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="A beautiful FreeCell solitaire game with smart auto-move and undo/redo features">
+    <meta name="theme-color" content="#2a5298">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FreeCell">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS Icons (we'll create simple colored squares for now) -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>FreeCell Solitaire</h1>
+            <div class="controls">
+                <button id="new-game">New Game</button>
+                <button id="undo" disabled>Undo</button>
+                <button id="redo" disabled>Redo</button>
+                <button id="auto-move">Auto Move</button>
+                <label class="auto-move-toggle">
+                    <input type="checkbox" id="continuous-auto-move" checked>
+                    Continuous Auto-Move
+                </label>
+                <button id="download-log">Show Debug Log</button>
+                <div class="score">Moves: <span id="move-count">0</span></div>
+            </div>
+        </div>
+        
+        <div class="game-board">
+            <!-- Top row: Free cells and Foundation piles -->
+            <div class="top-cells">
+                <!-- Free cells (4 temporary storage) -->
+                <div class="freecells">
+                    <div class="freecell" id="freecell-0"></div>
+                    <div class="freecell" id="freecell-1"></div>
+                    <div class="freecell" id="freecell-2"></div>
+                    <div class="freecell" id="freecell-3"></div>
+                </div>
+                
+                <!-- Foundation piles (4 suits) -->
+                <div class="foundations">
+                    <div class="foundation" data-suit="hearts" id="foundation-0"></div>
+                    <div class="foundation" data-suit="diamonds" id="foundation-1"></div>
+                    <div class="foundation" data-suit="clubs" id="foundation-2"></div>
+                    <div class="foundation" data-suit="spades" id="foundation-3"></div>
+                </div>
+            </div>
+            
+            <!-- Tableau (8 columns) -->
+            <div class="tableau">
+                <div class="column" id="column-0"></div>
+                <div class="column" id="column-1"></div>
+                <div class="column" id="column-2"></div>
+                <div class="column" id="column-3"></div>
+                <div class="column" id="column-4"></div>
+                <div class="column" id="column-5"></div>
+                <div class="column" id="column-6"></div>
+                <div class="column" id="column-7"></div>
+            </div>
+        </div>
+        
+        <div class="status">
+            <div id="game-status">Click "New Game" to start!</div>
+        </div>
+        
+        <div class="debug-panel" id="debug-panel" style="display: none;">
+            <div class="debug-header">
+                <h3>Debug Log</h3>
+                <button id="clear-log">Clear</button>
+            </div>
+            <div class="debug-log" id="debug-log"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

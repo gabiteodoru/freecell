@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Icons</title>
+</head>
+<body>
+    <canvas id="canvas192" width="192" height="192" style="display: none;"></canvas>
+    <canvas id="canvas512" width="512" height="512" style="display: none;"></canvas>
+    
+    <script>
+        function createIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1e3c72');
+            gradient.addColorStop(1, '#2a5298');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Card symbols
+            ctx.fillStyle = 'white';
+            ctx.font = `${size * 0.15}px Arial`;
+            ctx.textAlign = 'center';
+            
+            const suits = ['♠', '♥', '♦', '♣'];
+            const positions = [
+                [size * 0.25, size * 0.35],
+                [size * 0.75, size * 0.35],
+                [size * 0.25, size * 0.75],
+                [size * 0.75, size * 0.75]
+            ];
+            
+            suits.forEach((suit, i) => {
+                ctx.fillText(suit, positions[i][0], positions[i][1]);
+            });
+            
+            // Game title
+            ctx.font = `${size * 0.08}px Arial`;
+            ctx.fillText('FreeCell', size * 0.5, size * 0.55);
+            
+            // Download the icon
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Create both icons
+        createIcon(192);
+        createIcon(512);
+    </script>
+</body>
+</html>
