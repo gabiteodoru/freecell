@@ -933,40 +933,12 @@ class FreeCellGame {
     }
     
     setupMobileInteractions() {
-        // Add single tap as alternative to double-click on mobile
+        // Mobile touch state
         let lastTap = 0;
-        
-        document.addEventListener('touchend', (e) => {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            
-            // Check if this was a tap (not a drag)
-            let cardElement = e.target;
-            if (!cardElement.classList.contains('card')) {
-                cardElement = e.target.closest('.card');
-            }
-            
-            if (cardElement && !isDragging) {
-                // Quick double tap for auto-move
-                if (tapLength < 400 && tapLength > 0) {
-                    e.preventDefault();
-                    this.logEvent(`MOBILE: Double tap auto-move attempt`);
-                    this.handleCardDoubleClick(cardElement);
-                } else {
-                    // Single tap for regular selection
-                    this.logEvent(`MOBILE: Single tap selection`);
-                    this.handleCardClick(cardElement);
-                }
-            }
-            
-            lastTap = currentTime;
-            isDragging = false; // Reset drag state
-        });
-        
-        // Prevent page scrolling only during drag operations, not taps
         let isDragging = false;
         let startY = 0;
         
+        // Touch start
         document.addEventListener('touchstart', (e) => {
             if (this.isGameElement(e.target)) {
                 startY = e.touches[0].clientY;
@@ -974,6 +946,7 @@ class FreeCellGame {
             }
         }, { passive: true });
         
+        // Touch move - prevent scrolling during drags
         document.addEventListener('touchmove', (e) => {
             if (this.isGameElement(e.target)) {
                 const currentY = e.touches[0].clientY;
@@ -986,6 +959,48 @@ class FreeCellGame {
                 }
             }
         }, { passive: false });
+        
+        // Touch end - handle taps and moves
+        document.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (!isDragging) {
+                // Check what was tapped
+                let cardElement = e.target;
+                if (!cardElement.classList.contains('card')) {
+                    cardElement = e.target.closest('.card');
+                }
+                
+                if (cardElement) {
+                    // Quick double tap for auto-move
+                    if (tapLength < 400 && tapLength > 0) {
+                        e.preventDefault();
+                        this.logEvent(`MOBILE: Double tap auto-move`);
+                        this.handleCardDoubleClick(cardElement);
+                    } else {
+                        // Single tap for selection/move
+                        this.logEvent(`MOBILE: Single tap on card`);
+                        this.handleCardClick(cardElement);
+                    }
+                } else if (e.target.classList.contains('freecell')) {
+                    this.logEvent(`MOBILE: Tap on freecell`);
+                    this.handleFreecellClick(e.target);
+                } else if (e.target.classList.contains('foundation')) {
+                    this.logEvent(`MOBILE: Tap on foundation`);
+                    this.handleFoundationClick(e.target);
+                } else if (e.target.classList.contains('column')) {
+                    this.logEvent(`MOBILE: Tap on column`);
+                    this.handleColumnClick(e.target);
+                } else {
+                    // Tap elsewhere - clear selection
+                    this.clearSelection();
+                }
+            }
+            
+            lastTap = currentTime;
+            isDragging = false; // Reset drag state
+        });
         
         // Prevent context menu on long press
         document.addEventListener('contextmenu', (e) => {
