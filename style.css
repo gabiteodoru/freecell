@@ -17,8 +17,10 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* Prevent zoom on double tap */
+    /* Prevent zoom on double tap and improve touch handling */
     touch-action: manipulation;
+    /* Prevent overscroll bounce */
+    overscroll-behavior: none;
 }
 
 .game-container {
@@ -96,6 +98,9 @@ button:disabled:hover {
     grid-template-rows: auto 1fr;
     gap: 20px;
     min-height: 600px;
+    /* Prevent scrolling within game board */
+    touch-action: none;
+    overscroll-behavior: none;
 }
 
 .top-cells {

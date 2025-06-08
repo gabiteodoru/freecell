@@ -959,6 +959,19 @@ class FreeCellGame {
             lastTap = currentTime;
         });
         
+        // Prevent page scrolling when touching game elements
+        document.addEventListener('touchstart', (e) => {
+            if (this.isGameElement(e.target)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (this.isGameElement(e.target)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
         // Prevent context menu on long press
         document.addEventListener('contextmenu', (e) => {
             e.preventDefault();
@@ -966,6 +979,15 @@ class FreeCellGame {
         
         // Add haptic feedback for successful moves (if supported)
         this.addHapticFeedback();
+    }
+    
+    isGameElement(element) {
+        // Check if the touched element is part of the game (cards, foundations, freecells, columns)
+        return element.closest('.card') || 
+               element.closest('.foundation') || 
+               element.closest('.freecell') || 
+               element.closest('.column') || 
+               element.closest('.game-board');
     }
     
     addHapticFeedback() {
