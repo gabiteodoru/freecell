@@ -1,0 +1,41 @@
+Learn game development while playing classic FreeCell solitaire! This educational project showcases modern cross-platform development with complete source code available on GitHub.
+
+🎮 CLASSIC FREECELL GAMEPLAY
+• Traditional 52-card FreeCell rules
+• Intuitive drag & drop controls
+• Tap-to-move alternative
+• Smart auto-move features
+• Unlimited undo/redo
+• 99.999% solvable deals
+
+🎓 EDUCATIONAL VALUE
+Perfect for developers, students, and coding enthusiasts:
+• Complete Flutter/Dart source code
+• Cross-platform implementation (also available as web version)
+• Modern development patterns
+• Comprehensive testing examples
+• Clean architecture demonstration
+
+🚀 QUALITY FEATURES
+• 100% free and open source
+• No ads, no in-app purchases
+• Works completely offline
+• Lightweight and fast
+• Privacy-focused (no data collection)
+• Professional UI design
+
+💡 WHAT YOU CAN LEARN
+• Game logic implementation in Dart
+• Flutter mobile development
+• State management patterns
+• Touch interaction handling
+• UI/UX design principles
+• Testing strategies
+
+This app demonstrates the same game engine running on both mobile (Flutter) and web (JavaScript), making it an excellent study resource for cross-platform development.
+
+View the complete source code at: github.com/gabiteodoru/freecell
+
+Whether you're learning to code or just love classic solitaire, this app delivers both entertainment and education. Perfect for computer science students, bootcamp graduates, or anyone curious about game development.
+
+Download now and explore how modern apps are built!

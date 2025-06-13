@@ -48,3 +48,10 @@ CLAUDE.md
 # Windows/WSL metadata
 *:Zone.Identifier
 .claude/
+
+# Screenshots and assets
+screenshots/
+*.jpg
+*.png
+!store_assets/**/*.png
+!store_assets/**/*.jpg

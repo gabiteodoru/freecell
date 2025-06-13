@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'freecell_engine.dart' as engine;
 
 void main() {
@@ -271,44 +272,74 @@ class _FreeCellGameState extends State<FreeCellGame> {
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = (screenWidth - 60) / 8; // More padding to prevent overflow
+    final cardWidth = ((screenWidth - 40) / 8).clamp(30.0, double.infinity); // Ensure minimum width
     final cardHeight = cardWidth * 1.4;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0F4C3A),
       appBar: AppBar(
-        title: const Text('FreeCell Solitaire'),
+        title: const Text('FreeCell'),
         backgroundColor: const Color(0xFF0F4C3A),
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Center(
+              child: Text(
+                'Moves: ${gameState?.moveCount ?? 0}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.info_outline),
-            onPressed: () => showAboutDialog(
+            onPressed: () => showDialog(
               context: context,
-              applicationName: 'FreeCell Solitaire',
-              applicationVersion: '1.0.0',
-              applicationLegalese: '© 2025 Gabi Teodoru\nOpen Source Learning Tool',
-              children: [
-                const SizedBox(height: 16),
-                const Text('An educational project showcasing modern game development techniques.'),
-                const SizedBox(height: 8),
-                GestureDetector(
-                  onTap: () {
-                    // Note: In a real app, you'd use url_launcher package
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('GitHub: github.com/gabiteodoru/freecell')),
-                    );
-                  },
-                  child: const Text(
-                    'View source code on GitHub:\ngithub.com/gabiteodoru/freecell',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
+              builder: (context) => AlertDialog(
+                title: const Text('FreeCell Solitaire'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Version: 1.0.0'),
+                    const SizedBox(height: 8),
+                    const Text('© 2025 Gabi Teodoru'),
+                    const Text('Open Source Learning Tool'),
+                    const SizedBox(height: 16),
+                    const Text('An educational project showcasing modern game development techniques.'),
+                    const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () async {
+                        final url = Uri.parse('https://github.com/gabiteodoru/freecell');
+                        try {
+                          await launchUrl(url, mode: LaunchMode.externalApplication);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Could not open GitHub link')),
+                          );
+                        }
+                      },
+                      child: const Text(
+                        'View source code on GitHub:\ngithub.com/gabiteodoru/freecell',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -319,26 +350,6 @@ class _FreeCellGameState extends State<FreeCellGame> {
           child: Column(
             children: [
               // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'FreeCell',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'Moves: ${gameState!.moveCount}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 10),
 
               // Controls
