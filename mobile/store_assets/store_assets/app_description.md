@@ -51,7 +51,7 @@ FreeCell is a strategic solitaire game where almost every deal is solvable with 
 
 Perfect for developers learning game development AND players enjoying classic solitaire!
 
-**Keywords:** solitaire, freecell, card game, puzzle, strategy, offline, free, open source, educational, flutter, game development, learning
+**Keywords:** freecell, solitaire, card games, patience, klondike, spider solitaire, cards, classic games, brain games, puzzle games, strategy games, logic games, offline games, free games, no ads, no in-app purchases, educational, learning, programming, coding, flutter, dart, javascript, web development, mobile development, game development, computer science, open source, github, tutorial, students, developers
 
 ---
 
@@ -65,7 +65,21 @@ Perfect for developers learning game development AND players enjoying classic so
 ## App Store Categories:
 - **Primary:** Games > Card
 - **Secondary:** Games > Puzzle
+- **Alternative:** Education > Educational Games
+
+## Google Play Store Tags (up to 5):
+1. **card games** - Primary game category
+2. **solitaire** - Specific game type
+3. **educational** - Learning/teaching aspect
+4. **open source** - Unique differentiator
+5. **offline games** - Popular feature
 
 ## Content Rating: 
 - **Target:** Everyone (3+)
 - **No violent content, no ads, family-friendly**
+- **Educational value:** Suitable for learning programming concepts
+
+## ASO (App Store Optimization) Tips:
+- **Title suggestion:** "FreeCell Solitaire - Open Source"
+- **Subtitle suggestion:** "Learn game development with classic cards"
+- **Focus keywords:** freecell solitaire, educational games, programming tutorial
