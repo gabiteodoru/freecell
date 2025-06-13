@@ -31,9 +31,24 @@ body {
     padding: 0 10px;
 }
 
+.title-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .header h1 {
     font-size: 2.5em;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #B0C4DE;
+    margin-top: 4px;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .controls {
