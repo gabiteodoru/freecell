@@ -1,13 +1,13 @@
-# FreeCell - Classic Solitaire
+# FreeCell - Open Source Learning Tool
 
 ## Short Description (80 characters max)
-Classic FreeCell solitaire with intuitive drag & drop controls
+Open-source FreeCell solitaire - learn game development while playing!
 
 ## Full Description
 
-**The classic FreeCell card game, beautifully redesigned for mobile!**
+**Learn game development with this open-source FreeCell implementation!**
 
-Enjoy the timeless strategy of FreeCell solitaire with modern touch controls. This completely free version features:
+Perfect for developers, students, and card game enthusiasts. This educational project showcases modern game development techniques while delivering a polished FreeCell experience.
 
 🎮 **Perfect Mobile Experience**
 • Intuitive drag & drop gameplay
@@ -29,19 +29,29 @@ Enjoy the timeless strategy of FreeCell solitaire with modern touch controls. Th
 • Clean, distraction-free interface
 • No ads, no in-app purchases
 
+🎓 **Educational Value**
+• Complete source code on GitHub
+• Cross-platform development example (Flutter + Web)
+• Modern development practices
+• Comprehensive testing examples
+• Perfect for learning game logic implementation
+
 🎯 **Why You'll Love It**
-• 100% free forever
+• 100% free and open source
 • Works offline
 • No registration required
 • Respects your privacy
 • Lightweight and fast
 
+**About This Project**
+This app demonstrates modern cross-platform development, featuring the same game engine implemented in both Flutter (mobile) and JavaScript (web). Explore the source code at github.com/gabiteodoru/freecell to see how game logic, UI patterns, and testing work across platforms.
+
 **About FreeCell**
-FreeCell is a strategic solitaire game where every deal is solvable with perfect play. Use the four free cells wisely to organize your cards and build up the foundations from Ace to King.
+FreeCell is a strategic solitaire game where almost every deal is solvable with perfect play (about 99.999% solvability rate). Use the four free cells wisely to organize your cards and build up the foundations from Ace to King.
 
-Perfect for quick mental breaks or extended gaming sessions!
+Perfect for developers learning game development AND players enjoying classic solitaire!
 
-**Keywords:** solitaire, freecell, card game, puzzle, strategy, offline, free
+**Keywords:** solitaire, freecell, card game, puzzle, strategy, offline, free, open source, educational, flutter, game development, learning
 
 ---
 
