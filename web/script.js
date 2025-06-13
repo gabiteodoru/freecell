@@ -57,6 +57,16 @@ class FreeCellGame {
         this.logEvent('=== Log cleared ===');
     }
     
+    showAboutDialog() {
+        const dialog = document.getElementById('about-dialog');
+        dialog.style.display = 'flex';
+    }
+    
+    hideAboutDialog() {
+        const dialog = document.getElementById('about-dialog');
+        dialog.style.display = 'none';
+    }
+    
     updateUndoRedoButtons() {
         const undoBtn = document.getElementById('undo');
         const redoBtn = document.getElementById('redo');
@@ -93,6 +103,21 @@ class FreeCellGame {
         
         document.getElementById('clear-log').addEventListener('click', () => {
             this.clearLog();
+        });
+        
+        document.getElementById('about-btn').addEventListener('click', () => {
+            this.showAboutDialog();
+        });
+        
+        document.getElementById('close-about').addEventListener('click', () => {
+            this.hideAboutDialog();
+        });
+        
+        // Close about dialog when clicking outside
+        document.getElementById('about-dialog').addEventListener('click', (e) => {
+            if (e.target.id === 'about-dialog') {
+                this.hideAboutDialog();
+            }
         });
         
         document.getElementById('undo').addEventListener('click', () => {

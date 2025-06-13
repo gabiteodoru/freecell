@@ -12,7 +12,7 @@
 <body>
     <div class="game-container">
         <div class="header">
-            <h1>FreeCell</h1>
+            <h1>FreeCell - Open Source Learning Tool</h1>
             <div class="controls">
                 <button id="new-game">New Game</button>
                 <button id="undo" disabled>Undo</button>
@@ -23,6 +23,7 @@
                     Auto Auto-Move
                 </label>
                 <button id="download-log">Show Debug Log</button>
+                <button id="about-btn">About</button>
                 <div class="score">Moves: <span id="move-count">0</span></div>
             </div>
         </div>
@@ -70,6 +71,34 @@
                 <button id="clear-log">Clear</button>
             </div>
             <div class="debug-log" id="debug-log"></div>
+        </div>
+        
+        <div class="about-dialog" id="about-dialog" style="display: none;">
+            <div class="about-content">
+                <div class="about-header">
+                    <h3>About FreeCell - Open Source Learning Tool</h3>
+                    <button id="close-about">×</button>
+                </div>
+                <div class="about-body">
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>© 2025 Gabi Teodoru</strong></p>
+                    <br>
+                    <p>An educational project showcasing modern game development techniques across web and mobile platforms.</p>
+                    <br>
+                    <p><strong>What you can learn:</strong></p>
+                    <ul>
+                        <li>Cross-platform game logic (JavaScript + Flutter/Dart)</li>
+                        <li>Drag & drop interaction patterns</li>
+                        <li>Game state management</li>
+                        <li>Comprehensive testing strategies</li>
+                    </ul>
+                    <br>
+                    <p><strong>View source code:</strong><br>
+                    <a href="https://github.com/gabiteodoru/freecell" target="_blank">github.com/gabiteodoru/freecell</a></p>
+                    <br>
+                    <p><em>Perfect for developers learning game development!</em></p>
+                </div>
+            </div>
         </div>
     </div>
     
