@@ -18,3 +18,33 @@ npm-debug.log*
 # Optional: Temporary files
 *.tmp
 *.temp
+
+# Flutter/Android sensitive files
+mobile/android/key.properties
+mobile/android/local.properties
+*.keystore
+*.jks
+
+# Flutter build artifacts
+mobile/build/
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/pubspec.lock
+
+# Android build artifacts
+mobile/android/.gradle/
+mobile/android/captures/
+mobile/android/gradlew.lock
+mobile/android/local.properties
+mobile/android/app/release/
+
+# Claude/development notes
+claude.txt
+*.md.bak
+CLAUDE.md
+
+# Windows/WSL metadata
+*:Zone.Identifier
+.claude/

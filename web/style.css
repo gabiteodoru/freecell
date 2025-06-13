@@ -12,15 +12,10 @@ body {
     padding: 10px;
     margin: 0;
     overflow-x: hidden;
-    /* Prevent text selection on mobile */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* Prevent zoom on double tap and improve touch handling */
-    touch-action: manipulation;
-    /* Prevent overscroll bounce */
-    overscroll-behavior: none;
 }
 
 .game-container {
@@ -98,9 +93,6 @@ button:disabled:hover {
     grid-template-rows: auto 1fr;
     gap: 20px;
     min-height: 600px;
-    /* Allow touch but prevent scrolling */
-    touch-action: pan-y;
-    overscroll-behavior: none;
 }
 
 .top-cells {
@@ -116,8 +108,8 @@ button:disabled:hover {
 }
 
 .foundation, .freecell {
-    width: 80px;
-    height: 110px;
+    width: 98px;
+    height: 130px;
     border: 2px dashed rgba(255,255,255,0.3);
     border-radius: 8px;
     background: rgba(255,255,255,0.1);
@@ -155,9 +147,9 @@ button:disabled:hover {
 }
 
 .card {
-    width: 70px;
-    height: 95px;
-    border-radius: 6px;
+    width: 93px;
+    height: 126px;
+    border-radius: 8px;
     background: white;
     border: 1px solid #ccc;
     position: absolute;
@@ -167,7 +159,7 @@ button:disabled:hover {
     flex-direction: column;
     justify-content: space-between;
     padding: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
     user-select: none;
 }
 
@@ -196,18 +188,18 @@ button:disabled:hover {
 }
 
 .card-rank {
-    font-size: 14px;
+    font-size: 18.5px;
     font-weight: bold;
     line-height: 1;
 }
 
 .card-suit {
-    font-size: 14px;
+    font-size: 18.5px;
     text-align: center;
 }
 
 .card-center {
-    font-size: 24px;
+    font-size: 32px;
     text-align: center;
     align-self: center;
 }
@@ -232,15 +224,6 @@ button:disabled:hover {
     padding: 15px;
     max-height: 300px;
     overflow-y: auto;
-    /* Make debug panel always visible on mobile */
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    max-height: 40vh;
-    margin: 0;
-    border-radius: 8px 8px 0 0;
 }
 
 .debug-header {
@@ -282,145 +265,3 @@ button:disabled:hover {
     margin-bottom: 2px;
 }
 
-/* Mobile optimizations */
-@media (max-width: 768px) {
-    body {
-        padding: 5px;
-        /* Add bottom padding for debug panel */
-        padding-bottom: 40vh;
-    }
-    
-    .game-container {
-        max-width: 100%;
-    }
-    
-    .header {
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-    
-    .header h1 {
-        font-size: 1.8em;
-        margin: 0;
-    }
-    
-    .controls {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-    }
-    
-    button {
-        padding: 8px 12px;
-        font-size: 12px;
-        min-width: 60px;
-    }
-    
-    #download-log {
-        background: #ff6b35;
-        font-size: 10px;
-        padding: 6px 10px;
-        min-width: 50px;
-    }
-    
-    .auto-move-toggle {
-        font-size: 12px;
-    }
-    
-    .score {
-        font-size: 14px;
-        order: -1;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .top-cells {
-        padding: 0 10px;
-        gap: 20px;
-    }
-    
-    .foundations, .freecells {
-        gap: 6px;
-    }
-    
-    .foundation, .freecell {
-        width: 35px;
-        height: 50px;
-        border-width: 1px;
-    }
-    
-    .tableau {
-        grid-template-columns: repeat(8, 1fr);
-        gap: 2px;
-        padding: 0 2px;
-        margin-top: 10px;
-    }
-    
-    .column {
-        min-height: 200px;
-        padding: 2px;
-        background: rgba(255,255,255,0.03);
-    }
-    
-    .card {
-        width: 32px;
-        height: 44px;
-        font-size: 8px;
-        padding: 2px;
-    }
-    
-    .card-rank {
-        font-size: 7px;
-    }
-    
-    .card-center {
-        font-size: 12px;
-    }
-    
-    /* Tighter card stacking on mobile */
-    .columns .card {
-        margin-bottom: -30px;
-    }
-    
-    .debug-panel {
-        max-height: 30vh;
-        font-size: 10px;
-        padding: 10px;
-    }
-    
-    .debug-log {
-        font-size: 9px;
-        max-height: 100px;
-    }
-}
-
-/* Very small screens */
-@media (max-width: 480px) {
-    .top-cells {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .foundations, .freecells {
-        justify-content: center;
-    }
-    
-    .foundation, .freecell {
-        width: 40px;
-        height: 55px;
-    }
-    
-    .card {
-        width: 28px;
-        height: 38px;
-    }
-    
-    .card-rank {
-        font-size: 6px;
-    }
-    
-    .card-center {
-        font-size: 10px;
-    }
-}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0F4C3A" rx="80"/>
+  
+  <!-- Card Stack Background -->
+  <rect x="100" y="120" width="312" height="272" fill="#FFFFFF" rx="20" opacity="0.1"/>
+  
+  <!-- Main Card -->
+  <rect x="140" y="160" width="232" height="192" fill="#FFFFFF" rx="16" stroke="#CCCCCC" stroke-width="2"/>
+  
+  <!-- Card Content -->
+  <!-- Ace of Hearts -->
+  <text x="160" y="190" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#DC3545">A♥</text>
+  <text x="280" y="280" font-family="Arial, sans-serif" font-size="80" fill="#DC3545">♥</text>
+  
+  <!-- Secondary Cards (showing FreeCell layout) -->
+  <rect x="80" y="100" width="60" height="80" fill="#FFFFFF" rx="8" opacity="0.8"/>
+  <text x="95" y="125" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000">K</text>
+  <text x="105" y="155" font-family="Arial, sans-serif" font-size="20" fill="#000">♠</text>
+  
+  <rect x="372" y="100" width="60" height="80" fill="#FFFFFF" rx="8" opacity="0.8"/>
+  <text x="387" y="125" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#DC3545">Q</text>
+  <text x="397" y="155" font-family="Arial, sans-serif" font-size="20" fill="#DC3545">♥</text>
+  
+  <!-- Title -->
+  <text x="256" y="450" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#FFFFFF" text-anchor="middle">FreeCell</text>
+</svg>

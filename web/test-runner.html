@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCellEngine Tests</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2a5298;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+        }
+        .test-output {
+            background-color: #000;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            min-height: 300px;
+            font-size: 14px;
+        }
+        .demo-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #1e3d6f;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .info { color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FreeCellEngine Test Suite</h1>
+        
+        <div class="demo-section">
+            <h3>Decoupled Architecture Demo</h3>
+            <p>This demonstrates how the FreeCellEngine is now completely separate from the GUI:</p>
+            <ul>
+                <li><strong>FreeCellEngine</strong>: Pure game logic, no DOM dependencies</li>
+                <li><strong>Command-based API</strong>: executeMove(), executeDoubleClick()</li>
+                <li><strong>Testable</strong>: Can set up predetermined scenarios</li>
+                <li><strong>State management</strong>: Undo/redo, history tracking</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>Automated Tests</h3>
+            <button onclick="runTests()">Run All Tests</button>
+            <button onclick="clearOutput()">Clear Output</button>
+            <div id="test-output" class="test-output">Click "Run All Tests" to execute the test suite...</div>
+        </div>
+
+        <div class="demo-section">
+            <h3>Interactive Demo</h3>
+            <p>Try these commands to interact with the engine directly:</p>
+            <button onclick="demoBasicMove()">Demo: Basic Move</button>
+            <button onclick="demoDoubleClick()">Demo: Double-Click</button>
+            <button onclick="demoSequenceMove()">Demo: Sequence Move</button>
+            <button onclick="demoUndoRedo()">Demo: Undo/Redo</button>
+            <button onclick="demoCustomSetup()">Demo: Custom Setup</button>
+            <div id="demo-output" class="test-output" style="min-height: 200px;">Interactive demo output will appear here...</div>
+        </div>
+    </div>
+
+    <script src="freecell-engine.js"></script>
+    <script src="freecell-tests.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('demo-output');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            output.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearDemoOutput() {
+            document.getElementById('demo-output').innerHTML = '';
+        }
+
+        function runTests() {
+            const output = document.getElementById('test-output');
+            
+            // Capture console.log output
+            const originalLog = console.log;
+            let testOutput = '';
+            console.log = (...args) => {
+                testOutput += args.join(' ') + '\n';
+            };
+            
+            try {
+                // Run the same tests from freecell-tests.js
+                window.FreeCellTests.run();
+                
+            } catch (error) {
+                testOutput += `Error running tests: ${error.message}\n`;
+            }
+            
+            // Restore console.log
+            console.log = originalLog;
+            
+            // Display results
+            output.textContent = testOutput;
+        }
+
+        function clearOutput() {
+            document.getElementById('test-output').textContent = 'Output cleared...';
+        }
+
+        function demoBasicMove() {
+            clearDemoOutput();
+            log('=== Demo: Basic Move ===');
+            
+            const engine = new FreeCellEngine();
+            
+            // Set up a simple scenario
+            const columns = Array(8).fill().map(() => []);
+            columns[0] = [createCard('A', 'hearts')];
+            columns[1] = [createCard('2', 'clubs')];
+            
+            engine.setGameState(columns, [null, null, null, null], Array(4).fill().map(() => []), 0);
+            log('Set up: Ace of Hearts in column 0, 2 of Clubs in column 1');
+            
+            // Move Ace to foundation
+            const result = engine.executeMove(
+                { type: 'column', index: 0 },
+                { type: 'foundation', index: 0 }
+            );
+            
+            if (result.success) {
+                log('Successfully moved Ace of Hearts to foundation!', 'success');
+                log(`Move count: ${result.gameState.moveCount}`);
+                log(`Foundation now has: ${result.gameState.foundations[0].length} card(s)`);
+            } else {
+                log(`Move failed: ${result.error}`, 'error');
+            }
+        }
+
+        function demoDoubleClick() {
+            clearDemoOutput();
+            log('=== Demo: Double-Click Auto-Move ===');
+            
+            const engine = new FreeCellEngine();
+            
+            // Set up scenario where double-click can work
+            const columns = Array(8).fill().map(() => []);
+            columns[0] = [createCard('A', 'spades')];
+            
+            engine.setGameState(columns, [null, null, null, null], Array(4).fill().map(() => []), 0);
+            log('Set up: Ace of Spades in column 0');
+            
+            const result = engine.executeDoubleClick({ type: 'column', index: 0 });
+            
+            if (result.success) {
+                log('Double-click successful! Ace moved to foundation.', 'success');
+                log(`Foundation 2 (spades) now has: ${result.gameState.foundations[2].length} card(s)`);
+            } else {
+                log(`Double-click failed: ${result.error}`, 'error');
+            }
+        }
+
+        function demoSequenceMove() {
+            clearDemoOutput();
+            log('=== Demo: Sequence Move ===');
+            
+            const engine = new FreeCellEngine();
+            
+            // Set up a valid sequence
+            const columns = Array(8).fill().map(() => []);
+            columns[0] = [
+                createCard('6', 'hearts'),    // Red 6
+                createCard('5', 'clubs'),     // Black 5
+                createCard('4', 'diamonds')   // Red 4
+            ];
+            columns[1] = [createCard('7', 'clubs')]; // Black 7 to receive sequence
+            
+            engine.setGameState(columns, [null, null, null, null], Array(4).fill().map(() => []), 0);
+            log('Set up: Red 6, Black 5, Red 4 in column 0; Black 7 in column 1');
+            
+            // Move sequence starting from Black 5
+            const result = engine.executeMove(
+                { type: 'column', index: 0, cardIndex: 1 },
+                { type: 'column', index: 1 }
+            );
+            
+            if (result.success) {
+                log('Sequence move successful!', 'success');
+                log(`Column 0 now has: ${result.gameState.columns[0].length} card(s)`);
+                log(`Column 1 now has: ${result.gameState.columns[1].length} card(s)`);
+            } else {
+                log(`Sequence move failed: ${result.error}`, 'error');
+            }
+        }
+
+        function demoUndoRedo() {
+            clearDemoOutput();
+            log('=== Demo: Undo/Redo ===');
+            
+            const engine = new FreeCellEngine();
+            
+            // Set up initial state
+            const columns = Array(8).fill().map(() => []);
+            columns[0] = [createCard('A', 'diamonds')];
+            
+            engine.setGameState(columns, [null, null, null, null], Array(4).fill().map(() => []), 0);
+            log('Initial: Ace of Diamonds in column 0');
+            
+            // Make a move
+            const moveResult = engine.executeMove(
+                { type: 'column', index: 0 },
+                { type: 'foundation', index: 1 }
+            );
+            log(`After move: Foundation has ${moveResult.gameState.foundations[1].length} card(s)`);
+            
+            // Undo
+            const undoResult = engine.undo();
+            if (undoResult) {
+                log('Undo successful!', 'success');
+                log(`After undo: Column 0 has ${undoResult.columns[0].length} card(s)`);
+                log(`After undo: Foundation has ${undoResult.foundations[1].length} card(s)`);
+            }
+            
+            // Redo
+            const redoResult = engine.redo();
+            if (redoResult) {
+                log('Redo successful!', 'success');
+                log(`After redo: Foundation has ${redoResult.foundations[1].length} card(s)`);
+            }
+        }
+
+        function demoCustomSetup() {
+            clearDemoOutput();
+            log('=== Demo: Custom Setup for Testing ===');
+            
+            const engine = new FreeCellEngine();
+            
+            // Create a complex custom setup
+            const columns = Array(8).fill().map(() => []);
+            columns[0] = [createCard('K', 'spades'), createCard('Q', 'hearts')];
+            columns[1] = [createCard('J', 'clubs')];
+            columns[2] = [createCard('10', 'diamonds'), createCard('9', 'spades')];
+            
+            const freecells = [createCard('A', 'hearts'), null, createCard('2', 'clubs'), null];
+            
+            const foundations = [[], [], [], []];
+            foundations[0] = [createCard('A', 'hearts')]; // Already in foundation
+            
+            engine.setGameState(columns, freecells, foundations, 15);
+            
+            log('Custom setup created:', 'success');
+            log('Column 0: King of Spades, Queen of Hearts');
+            log('Column 1: Jack of Clubs');
+            log('Column 2: 10 of Diamonds, 9 of Spades');
+            log('Freecells: Ace of Hearts, empty, 2 of Clubs, empty');
+            log('Foundation 0: Ace of Hearts');
+            log(`Move count: ${engine.getGameState().moveCount}`);
+            
+            // Try some moves
+            log('\nTrying to move Queen of Hearts to Jack of Clubs...');
+            const result = engine.executeMove(
+                { type: 'column', index: 0 },
+                { type: 'column', index: 1 }
+            );
+            
+            if (result.success) {
+                log('Move successful!', 'success');
+            } else {
+                log(`Move failed: ${result.error}`, 'error');
+            }
+        }
+
+        // Helper function to create cards for demos
+        function createCard(rank, suit) {
+            return {
+                rank,
+                suit,
+                color: (suit === 'hearts' || suit === 'diamonds') ? 'red' : 'black',
+                value: ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'].indexOf(rank) + 1
+            };
+        }
+    </script>
+</body>
+</html>
